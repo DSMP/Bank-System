@@ -14,14 +14,7 @@ public class DBConnection {
 
     DBConnection() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("Brak drivera JDBC dla mySQL");
-        }
-
-        try {
-            conn = DriverManager.getConnection("jdbc:mysql://85.10.205.173:3306/bankingsystem?allowMultiQueries=true", "dsmp", "MaciejGuzy"); // MySQL
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3308/bankingsystem", "dsmp", "qwerty"); // MySQL
 
             if (conn != null) System.out.println("Nazwiązano polaczenie z baza");
         } catch (Exception se) {
@@ -88,21 +81,21 @@ public class DBConnection {
 
     public String getUserByName(String name)
     {
-        return getUser("SELECT * FROM users WHERE Imie='" + name + "';\n");
+        return getUser("SELECT * FROM users WHERE Imie=" + name + ";\n");
     }
     public String getUserByPesel(String pesel)
     {
-        return getUser("SELECT * FROM users WHERE Pesel='" + pesel + "';\n");
+        return getUser("SELECT * FROM users WHERE Pesel=" + pesel + ";\n");
     }
 
     public String getUserBySurname(String surname)
     {
-        return getUser("SELECT * FROM users WHERE Nazwisko='" + surname + "';\n");
+        return getUser("SELECT * FROM users WHERE Nazwisko=" + surname + ";\n");
     }
 
     public String getUserByAdres(String adres)
     {
-        return getUser("SELECT * FROM users WHERE Adres='" + adres + "';\n");
+        return getUser("SELECT * FROM users WHERE Adres=" + adres + ";\n");
     }
 
     private void setCash(String querry)
@@ -124,21 +117,21 @@ public class DBConnection {
 
     public void setCashByName(int cash, String name)
     {
-        setCash("Update users SET Gotowka = " + cash + " WHERE Imie='" + name + "';\n");
+        setCash("Update users SET Gotowka = " + cash + " WHERE Imie=" + name + ";\n");
     }
 
     public void setCashBySurname(int cash, String surname)
     {
-        setCash("Update users SET Gotowka = " + cash + " WHERE Nazwisko='" + surname + "';\n");
+        setCash("Update users SET Gotowka = " + cash + " WHERE Nazwisko=" + surname + ";\n");
     }
 
     public void setCashByAdres(int cash, String adres)
     {
-        setCash("Update users SET Gotowka = " + cash + " WHERE Adres='" + adres + "';\n");
+        setCash("Update users SET Gotowka = " + cash + " WHERE Adres=" + adres + ";\n");
     }
     public void setCashByPesel(int cash, String pesel)
     {
-        setCash("Update users SET Gotowka = " + cash + " WHERE Pesel='" + pesel + "';\n");
+        setCash("Update users SET Gotowka = " + cash + " WHERE Pesel=" + pesel + ";\n");
     }
 
     private void remove(String querry)
@@ -159,28 +152,28 @@ public class DBConnection {
 
     public void removeByName(String name)
     {
-        remove("Delete FROM users WHERE Imie='" + name + "';\n");
+        remove("Delete FROM users WHERE Imie=" + name + ";\n");
     }
 
     public void removeBySurname(String surname)
     {
-        remove("Delete FROM users WHERE Nazwisko='" + surname + "';\n");
+        remove("Delete FROM users WHERE Nazwisko=" + surname + ";\n");
     }
 
     public void removeByAdres(String adres)
     {
-        remove("Delete FROM users WHERE Adres='" + adres + "';\n");
+        remove("Delete FROM users WHERE Adres=" + adres + ";\n");
     }
 
     public void removeByPesel(String pesel)
     {
-        remove("Delete FROM users WHERE Pesel='" + pesel + "';\n");
+        remove("Delete FROM users WHERE Pesel=" + pesel + ";\n");
     }
 
     public void add(String name, String surname, String pesel, String adres)
     {
         try {
-            pst = conn.prepareStatement("INSERT INTO users(Imie,Nazwisko,Pesel,Adres) values ('" + name + "','" + surname + "','" + pesel + "','" + adres + "')");
+            pst = conn.prepareStatement("INSERT INTO users(Imie,Nazwisko,Pesel,Adres) values (" + name + "," + surname + "," + pesel + "," + adres + ")");
             uprs = pst.executeUpdate();
         } catch(MySQLIntegrityConstraintViolationException se)
         {
